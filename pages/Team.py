@@ -26,7 +26,7 @@ markdown = """
 - Gimnasia Artística - *Massiel Paz (Estudiante 3er año - Ciencia de la Computación)*
 - Gimnasia con Trampolín - *Reinaldo Cánovas (Estudiante 2do año - Ciencia de Datos)*
 - Gimnsaia Rítmica - *Reinaldo Cánovas (Estudiante 2do año - Ciencia de Datos)*
-- Golf - *Marco (Estudiante 4to año - Ciencia de la Computación)*
+- Golf - *Marco A. Ochill (Estudiante 4to año - Ciencia de la Computación)*
 - Halterofilia - *Alex S. Bas (Estudiante 3er año - Ciencia de la Computación)*
 - Hípica - *Sebastián Suárez (Estudiante 4to año - Ciencia de la Computación)*
 - Hockey sobre Césped - *Daniel Polanco (Estudiante 3er año - Ciencia de la Computación)*
