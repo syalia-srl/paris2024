@@ -59,7 +59,7 @@ with st.expander(f"{n_tpred}  eventos en total",True):
 
     with col1:
         with st.container(border=True):
-            st.write(f"{n_tpred} eventos pronosticados de {n_tpred}")
+            st.write(f"{n_tpred} eventos pronosticados de {n_tpred} posibles")
             df_tp = pd.DataFrame(
                 {
                     "type": ["Eventos sin pronóstico", "Eventos pronosticados"],
@@ -181,16 +181,19 @@ def count_stats(predictions):
     return {"champs":champs, "champs_out":champs_out,"medalists":medalists,"medalists_out":medalists_out,"inc":inc,"exact":exact,"finalists":finalists}
 
 if n_fpred>0:
-    
-    with st.expander(f"{n_fpred}  eventos concluidos",True):
+    conc = "evento concluido" if n_fpred==1 else "eventos concluidos"
+    with st.expander(f"{n_fpred}  {conc}",True):
         
         stats = count_stats(f_predictions)
         
         fcol1, fcol2 = st.columns(2)
         
         with fcol1:
+            
             with st.container(border=True):
-                st.write(f"{stats['champs']} campeones pronosticados de {n_fpred} posibles" )
+                champp = "campeón pronosticado" if stats['champs']==1 else "campeones pronosticados"
+                posible = "posible" if n_fpred==1 else "posibles"
+                st.write(f"{stats['champs']} {champp} de {n_fpred} {posible}" )
                 df_g = pd.DataFrame(
                     {
                         "type": ["Campeones no pronosticados", "Campeones pronosticados"],
@@ -210,7 +213,8 @@ if n_fpred>0:
                 st.plotly_chart(fig_g,use_container_width=True)
 
             with st.container(border=True):
-                st.write(f"{stats['medalists']} medallistas de {n_fpred*3+stats['inc']} posibles" )
+                meds = "medallista" if stats['medalists']==1 else "medallistas"
+                st.write(f"{stats['medalists']} {meds} de {n_fpred*3+stats['inc']} posibles" )
                 df_m = pd.DataFrame(
                     {
                         "type": ["Medallistas no pronosticados", "Medallistas pronosticados"],
@@ -230,7 +234,8 @@ if n_fpred>0:
                 st.plotly_chart(fig_m,use_container_width=True)
 
             with st.container(border=True):
-                st.write(f"{stats['exact']} posiciones exactas de {n_fpred*8} posibles" )
+                pose = "posición exacta" if stats['exact']==1 else "posiciones exactas"
+                st.write(f"{stats['exact']} {pose} de {n_fpred*8} posibles" )
                 df_m = pd.DataFrame(
                     {
                         "type": ["Posiciones erradas", "Posiciones exactas"],
@@ -251,7 +256,9 @@ if n_fpred>0:
 
         with fcol2:
             with st.container(border=True):
-                st.write(f"{stats['champs']+stats['champs_out']} campeones entre finalistas de {n_fpred} posibles" )
+                champo = "campeón" if (stats['champs']+stats['champs_out'])==1 else "campeones"
+                poso = "posible" if n_fpred==1 else "posibles"
+                st.write(f"{stats['champs']+stats['champs_out']} {champo} entre finalistas de {n_fpred} {poso}" )
                 
                 df_m = pd.DataFrame(
                     {
@@ -272,7 +279,8 @@ if n_fpred>0:
                 st.plotly_chart(fig_m,use_container_width=True)
             
             with st.container(border=True):
-                st.write(f"{stats['medalists']+stats['medalists_out']} medallistas entre finalistas de {n_fpred*3+stats['inc']} posibles" )
+                medo = "medallista" if (stats['medalists']+stats['medalists_out'])==1 else "medallistas"
+                st.write(f"{stats['medalists']+stats['medalists_out']} {medo} entre finalistas de {n_fpred*3+stats['inc']} posibles" )
                 df_m = pd.DataFrame(
                     {
                         "type": ["Medallistas fuera de los finalistas", "Medallistas entre los finalistas"],
@@ -292,7 +300,8 @@ if n_fpred>0:
                 st.plotly_chart(fig_m,use_container_width=True)
             
             with st.container(border=True):
-                st.write(f"{stats['finalists']} finalistas de {n_fpred*8} posibles" )
+                fins = "finalista" if stats['finalists']==1 else "finalistas"
+                st.write(f"{stats['finalists']} {fins} de {n_fpred*8} posibles" )
                 df_m = pd.DataFrame(
                     {
                         "type": ["Finalistas errados", "Finalistas acertados"],
