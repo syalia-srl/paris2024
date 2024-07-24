@@ -19,7 +19,7 @@ events = data["events"]
 
 coi_names = list(domains["to_names"].items())
 coi_names.sort(key=lambda x: x[1])
-print(coi_names)
+
 names = [i[1] for i in coi_names]
 abrvs = [i[0] for i in coi_names]
 
