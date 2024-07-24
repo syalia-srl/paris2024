@@ -49,7 +49,7 @@ distintas métricas. En [Tabla de Medallas](/Medal_Table) se pueden ver, en gene
 que se logren en la medida que concluyan los eventos. Finalmente, en [Países](/Countries) se pueden consultar los pronósticos de medallas y finalistas para cada 
 país detallando los deportistas, eventos y deportes.
 
-El proyecto fue desarrollado en su totatalidad poe estudiantes y profesores del [Grupo de Inteligencia Artificial y Ciencia de Datos](https://gia-uh.github.io/) de la [Facultad de Matemática 
+El proyecto fue desarrollado en su totalidad poe estudiantes y profesores del [Grupo de Inteligencia Artificial y Ciencia de Datos](https://gia-uh.github.io/) de la [Facultad de Matemática 
 y Computación](https://matcom.uh.cu) de la [Universidad de La Habana](https://www.uh.cu) en colaboración con la empresa [Syalia S.R.L.](https://www.syalia.com) y el 
 proyecto [Postdata.club](https://postdataclub.github.io). 
 """
