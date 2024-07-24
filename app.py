@@ -36,7 +36,7 @@ Los Juegos de la XXXIII Olimpiada, [París 2024](https://olympics.com/es/paris-2
 En ese período miles de atletas del mundo entero se enfentrarán por obtener las medallas en todos los deportes convocados.
 
 Este proyecto propone las pronósticos de cada uno de los 329 eventos convocados. Por cada evento, se realizó
-un modelo computacional que, basado en datos de los equipos y atletas clasificados, predices los posibles medallistas así como
+un modelo computacional que, basado en datos de los equipos y atletas clasificados, predice los posibles medallistas así como
 a los atletas que quedarían entre los 8 primeros de cada especialidad. Asimismo, teniendo todos los resultados, también se pudo
 predecir la tabla de medallas final de los juegos.
 

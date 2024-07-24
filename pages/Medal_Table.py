@@ -99,90 +99,94 @@ def result_medal_count(results):
 
 
 if ended:
-    st.write("Todos los eventos seleccionados finalizaron")
+    if len(predictions) > 0:
+        st.write("Todos los eventos seleccionados finalizaron")
+    else:
+        st.write("Aún no han concluido eventos ")
 else:
     st.write("Todavía faltan por concluir algunos eventos")
 
-st.write("Tabla de Medallas:")
+if len(predictions) > 0:
+    st.write("Tabla de Medallas:")
 
-col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2)
 
-with col1:
-    p_medals = prediction_medals_count(predictions)
+    with col1:
+        p_medals = prediction_medals_count(predictions)
 
-    p_countries = []
-    p_names = []
-    p_gold = []
-    p_silver = []
-    p_bronce = []
-    p_total = []
+        p_countries = []
+        p_names = []
+        p_gold = []
+        p_silver = []
+        p_bronce = []
+        p_total = []
 
-    for country, medals in p_medals.items():
-        p_countries.append(country)
-        p_names.append(domains["to_names"][country.lower()])
-        p_gold.append(medals[1])
-        p_silver.append(medals[2])
-        p_bronce.append(medals[3])
-        p_total.append(medals[1] + medals[2] + medals[3])
+        for country, medals in p_medals.items():
+            p_countries.append(country)
+            p_names.append(domains["to_names"][country.lower()])
+            p_gold.append(medals[1])
+            p_silver.append(medals[2])
+            p_bronce.append(medals[3])
+            p_total.append(medals[1] + medals[2] + medals[3])
 
-    df_p = pd.DataFrame(
-        {
-            "CO": p_countries,
-            "País": p_names,
-            "Oro": p_gold,
-            "Plata": p_silver,
-            "Bronce": p_bronce,
-            "Total": p_total,
-        }
-    )
-
-    df_p = df_p.sort_values(by=["Oro", "Plata", "Bronce"], ascending=False)
-
-    df_p.insert(0, "Po.", [i for i in range(1, len(df_p) + 1)], True)
-    
-    with st.container(border=True):
-        st.write("Predicción:")
-
-        st.dataframe(data=df_p, hide_index=True, height=round((len(df_p) + 1) * 35.3))
-
-if ended:
-    with col2:
-        r_medals = result_medal_count(results)
-
-        r_countries = []
-        r_names = []
-        r_gold = []
-        r_silver = []
-        r_bronce = []
-        r_total = []
-
-        for country, medals in r_medals.items():
-            r_countries.append(country)
-            r_names.append(domains["to_names"][country.lower()])
-            r_gold.append(medals[1])
-            r_silver.append(medals[2])
-            r_bronce.append(medals[3])
-            r_total.append(medals[1] + medals[2] + medals[3])
-
-        df_r = pd.DataFrame(
+        df_p = pd.DataFrame(
             {
-                "CO": r_countries,
-                "País": r_names,
-                "Oro": r_gold,
-                "Plata": r_silver,
-                "Bronce": r_bronce,
-                "Total": r_total,
+                "CO": p_countries,
+                "País": p_names,
+                "Oro": p_gold,
+                "Plata": p_silver,
+                "Bronce": p_bronce,
+                "Total": p_total,
             }
         )
 
-        df_r = df_r.sort_values(by=["Oro", "Plata", "Bronce"], ascending=False)
+        df_p = df_p.sort_values(by=["Oro", "Plata", "Bronce"], ascending=False)
 
-        df_r.insert(0, "Po.", [i for i in range(1, len(df_r) + 1)], True)
-
+        df_p.insert(0, "Po.", [i for i in range(1, len(df_p) + 1)], True)
+        
         with st.container(border=True):
+            st.write("Predicción:")
 
-            st.write("Resultado:")
+            st.dataframe(data=df_p, hide_index=True, height=round((len(df_p) + 1) * 35.3))
 
-            st.dataframe(data=df_r, hide_index=True, height=round((len(df_r) + 1) * 35.3))
+    if ended:
+        with col2:
+            r_medals = result_medal_count(results)
+
+            r_countries = []
+            r_names = []
+            r_gold = []
+            r_silver = []
+            r_bronce = []
+            r_total = []
+
+            for country, medals in r_medals.items():
+                r_countries.append(country)
+                r_names.append(domains["to_names"][country.lower()])
+                r_gold.append(medals[1])
+                r_silver.append(medals[2])
+                r_bronce.append(medals[3])
+                r_total.append(medals[1] + medals[2] + medals[3])
+
+            df_r = pd.DataFrame(
+                {
+                    "CO": r_countries,
+                    "País": r_names,
+                    "Oro": r_gold,
+                    "Plata": r_silver,
+                    "Bronce": r_bronce,
+                    "Total": r_total,
+                }
+            )
+
+            df_r = df_r.sort_values(by=["Oro", "Plata", "Bronce"], ascending=False)
+
+            df_r.insert(0, "Po.", [i for i in range(1, len(df_r) + 1)], True)
+
+            with st.container(border=True):
+
+                st.write("Resultado:")
+
+                st.dataframe(data=df_r, hide_index=True, height=round((len(df_r) + 1) * 35.3))
 
 menu()
