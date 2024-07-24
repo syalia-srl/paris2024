@@ -46,7 +46,7 @@ markdown = """
 - Taekwondo - *Glenda N. Ríos (Estudiante 2do año - Ciencia de la Computación)*
 - Tenis - *Anthuán Montes de Oca (Estudiante 4to año - Ciencia de la Computación)*
 - Tenis de Mesa - *Daniel Polanco (Estudiante 3er año - Ciencia de la Computación)*
-- Tiro - *Eric Tornas (Estudiante 4to año - Ciencia de la Computación)*
+- Tiro - *Eric L. López (Estudiante 4to año - Ciencia de la Computación)*
 - Tiro con Arco - *Glenda N. Ríos (Estudiante 2do año - Ciencia de la Computación)*
 - Triatlón - *Adrián Navarro (Estudiante 3er año - Ciencia de la Computación)*
 - Vela - *Francisco Préstamo (Estudiante 2do año - Ciencia de la Computación)*
