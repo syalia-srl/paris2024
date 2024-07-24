@@ -18,6 +18,8 @@ sports_names = [sports[id]["name"] for id in sports_ids]
 sports_ids = ["Todos"] + sports_ids
 sports_names = ["Todos"] + sports_names
 
+st.header("Estadísticas",divider=True)
+
 sport_name = st.selectbox(
     "Seleccione el deporte:",
     sports_names,

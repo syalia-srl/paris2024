@@ -24,6 +24,7 @@ names = [i[1] for i in coi_names]
 abrvs = [i[0] for i in coi_names]
 
 
+st.header("Pronóstico por Países",divider=True)
 
 
 def get_predictions(cid):
