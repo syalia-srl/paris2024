@@ -136,7 +136,7 @@ def count_stats(predictions):
         if p["4"]["status"] != 0:
             finalists += 1
             if p["4"]["status"] == 2:
-                if sports[s]["multiple_bronce"]:
+                if sports[item["sport"]]["multiple_bronce"]:
                     medalists += 1
                     inc += 1
                     medalists_out += 1
