@@ -16,7 +16,7 @@ events = data["events"]
 sports_ids = [id for id in data["sports"]]
 sports_names = [sports[id]["name"] for id in sports_ids]
 
-st.header("Pronósticos",divider=True)
+st.header("Pronósticos", divider=True)
 
 
 def get_sport_sexs(sport_id):
@@ -152,7 +152,6 @@ if sport_name:
                     "Lugar": fr_places,
                     "Nombre": fr_names,
                     "Pais": fr_countries,
-                    "status": f_status,
                 }
             )
 
@@ -176,10 +175,9 @@ if sport_name:
                 
                 ⯀ Medallista fuera de posición ⯀ Campeón fuera de posición
                 """
-                #st.markdown(legend)
+                # st.markdown(legend)
             else:
                 st.write("El evento aún no ha concluido")
-                
 
             with st.expander("Medallistas", True):
                 mcol1, mcol2 = st.columns(2)

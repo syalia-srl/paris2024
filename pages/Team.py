@@ -25,7 +25,7 @@ markdown = """
 - Fútbol  - *Yudivián Almeida (Profesor)*
 - Gimnasia Artística - *Massiel Paz (Estudiante 3er año - Ciencia de la Computación)*
 - Gimnasia con Trampolín - *Reinaldo Cánovas (Estudiante 2do año - Ciencia de Datos)*
-- Gimnsaia Rítmica - *Reinaldo Cánovas (Estudiante 2do año - Ciencia de Datos)*
+- Gimnasia Rítmica - *Reinaldo Cánovas (Estudiante 2do año - Ciencia de Datos)*
 - Golf - *Marco A. Ochill (Estudiante 4to año - Ciencia de la Computación)*
 - Halterofilia - *Alex S. Bas (Estudiante 3er año - Ciencia de la Computación)*
 - Hípica - *Sebastián Suárez (Estudiante 4to año - Ciencia de la Computación)*

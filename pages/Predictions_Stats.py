@@ -113,8 +113,10 @@ def count_stats(predictions):
             finalists+=1
             if p["1"]["status"]==2:
                 champs += 1
+                champs_out +=1
                 medalists +=1
                 exact+=1
+                medalists_out+=1
             elif p["1"]["status"]==3:
                 medalists_out+=1
         if p["2"]["status"]!=0:
@@ -122,30 +124,36 @@ def count_stats(predictions):
             if p["2"]["status"]==2:
                 medalists+=1
                 exact+=1
+                medalists_out+=1
             elif p["2"]["status"]==3:
                 medalists_out+=1
             elif p["2"]["status"]==4:
                 champs_out+=1
+                medalists_out+=1
         if p["3"]["status"]!=0:
             finalists+=1
             if p["3"]["status"]==2:
                 medalists+=1
                 exact+=1
+                medalists_out+=1
             elif p["3"]["status"]==3:
                 medalists_out+=1
             elif p["3"]["status"]==4:
                 champs_out+=1
+                medalists_out+=1
         if p["4"]["status"]!=0:
             finalists+=1
             if p["4"]["status"]==2:
                 if sports[s]["multiple_bronce"]:
                     medalists+=1
                     inc += 1
+                    medalists_out+=1
                 exact+=1
             elif p["4"]["status"]==3:
                 medalists_out+=1
             elif p["4"]["status"]==4:
                 champs_out+=1
+                medalists_out+=1
         if p["5"]["status"]!=0:
             finalists+=1
             if p["5"]["status"]==2:
@@ -154,6 +162,7 @@ def count_stats(predictions):
                 medalists_out+=1
             elif p["5"]["status"]==4:
                 champs_out+=1
+                medalists_out+=1
         if p["6"]["status"]!=0:
             finalists+=1
             if p["6"]["status"]==2:
@@ -162,6 +171,7 @@ def count_stats(predictions):
                 medalists_out+=1
             elif p["6"]["status"]==4:
                 champs_out+=1
+                medalists_out+=1
         if p["7"]["status"]!=0:
             finalists+=1
             if p["7"]["status"]==2:
@@ -170,6 +180,7 @@ def count_stats(predictions):
                 medalists_out+=1
             elif p["7"]["status"]==4:
                 champs_out+=1
+                medalists_out+=1
         if p["8"]["status"]!=0:
             finalists+=1
             if p["8"]["status"]==2:
@@ -178,6 +189,7 @@ def count_stats(predictions):
                 medalists_out+=1
             elif p["8"]["status"]==4:
                 champs_out+=1
+                medalists_out+=1
     return {"champs":champs, "champs_out":champs_out,"medalists":medalists,"medalists_out":medalists_out,"inc":inc,"exact":exact,"finalists":finalists}
 
 if n_fpred>0:
@@ -258,12 +270,12 @@ if n_fpred>0:
             with st.container(border=True):
                 champo = "campeón" if (stats['champs']+stats['champs_out'])==1 else "campeones"
                 poso = "posible" if n_fpred==1 else "posibles"
-                st.write(f"{stats['champs']+stats['champs_out']} {champo} entre finalistas de {n_fpred} {poso}" )
+                st.write(f"{stats['champs_out']} {champo} entre finalistas de {n_fpred} {poso}" )
                 
                 df_m = pd.DataFrame(
                     {
                         "type": ["Campeones fuera de los finalistas", "Campeones entre los finalistas"],
-                        "data": [n_fpred - stats['champs']+stats['champs_out'],stats['champs']+stats['champs_out']]
+                        "data": [n_fpred - stats['champs_out'],stats['champs_out']]
                     }
                 )
                 fig_m = px.pie(df_m, values='data', names='type',height=350,color="type", color_discrete_map={
@@ -279,12 +291,12 @@ if n_fpred>0:
                 st.plotly_chart(fig_m,use_container_width=True)
             
             with st.container(border=True):
-                medo = "medallista" if (stats['medalists']+stats['medalists_out'])==1 else "medallistas"
-                st.write(f"{stats['medalists']+stats['medalists_out']} {medo} entre finalistas de {n_fpred*3+stats['inc']} posibles" )
+                medo = "medallista" if (stats['medalists_out'])==1 else "medallistas"
+                st.write(f"{stats['medalists_out']} {medo} entre finalistas de {n_fpred*3+stats['inc']} posibles" )
                 df_m = pd.DataFrame(
                     {
                         "type": ["Medallistas fuera de los finalistas", "Medallistas entre los finalistas"],
-                        "data": [(n_fpred*3+stats['inc']-stats['medalists']-stats['medalists_out']),stats['medalists']+stats['medalists_out']]
+                        "data": [(n_fpred*3+stats['inc']-stats['medalists_out']),stats['medalists_out']]
                     }
                 )
                 fig_m = px.pie(df_m, values='data', names='type',height=350,color="type", color_discrete_map={
