@@ -55,8 +55,6 @@ def filter_by_ended(predictions):
 
 
 def filter_by_dates(start, end, predictions):
-    st.write(start)
-    st.write(end)
     dpredictions = []
     for item in predictions:
         date = item["date"]
