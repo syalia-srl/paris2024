@@ -96,22 +96,24 @@ if sport_name:
             mr_names = []
             mr_countries = []
             for i in range(1, 4):
-                m_places.append(i)
-                mr_places.append(i)
-                m_names.append(prediction[str(i)]["name"])
-                mr_names.append(result[str(i)][0]["name"])
-                m_countries.append(prediction[str(i)]["country_domain"])
-                mr_countries.append(result[str(i)][0]["country_domain"])
+                m_places.append(i)                
                 m_status.append(prediction[str(i)]["status"])
+                m_names.append(prediction[str(i)]["name"])
+                m_countries.append(prediction[str(i)]["country_domain"])
+                for item in result[str(i)]:
+                    mr_places.append(i)
+                    mr_names.append(item["name"])
+                    mr_countries.append(item["country_domain"])
             start_finalists = 4
             if sports[sport_id]["multiple_bronce"]:
-                m_places.append(3)
-                mr_places.append(3)
+                m_places.append(3)                
                 m_names.append(prediction["4"]["name"])
-                mr_names.append(result["4"][0]["name"])
                 m_countries.append(prediction["4"]["country_domain"])
-                mr_countries.append(result["4"][0]["country_domain"])
                 m_status.append(prediction["4"]["status"])
+                for item in result["4"]:
+                    mr_places.append(3)
+                    mr_names.append(item["name"])
+                    mr_countries.append(item["country_domain"])
                 start_finalists = 5
             f_places = []
             f_names = []
@@ -122,12 +124,14 @@ if sport_name:
             fr_countries = []
             for i in range(start_finalists, 9):
                 f_places.append(i)
-                fr_places.append(i)
                 f_names.append(prediction[str(i)]["name"])
-                fr_names.append(result[str(i)][0]["name"])
-                f_countries.append(prediction[str(i)]["country_domain"])
-                fr_countries.append(result[str(i)][0]["country_domain"])
                 f_status.append(prediction[str(i)]["status"])
+                f_countries.append(prediction[str(i)]["country_domain"])
+                for item in result[str(i)]:
+                    fr_places.append(i)
+                    fr_names.append(item["name"])
+                    fr_countries.append(item["country_domain"])
+
             df_m = pd.DataFrame(
                 {
                     "Lugar": m_places,
