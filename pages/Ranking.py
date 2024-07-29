@@ -55,6 +55,8 @@ def filter_by_ended(predictions):
 
 
 def filter_by_dates(start, end, predictions):
+    st.write(start)
+    st.write(end)
     dpredictions = []
     for item in predictions:
         date = item["date"]
@@ -262,10 +264,10 @@ if len(ended) != 0:
             name = None
             group = None
             if criteria == "Por deporte":
-                group = group_predictions_by_sport(ended)
+                group = group_predictions_by_sport(preds)
                 name = "Deportes"
             else:
-                group = group_predictions_by_author(ended)
+                group = group_predictions_by_author(preds)
                 name = "Autores"
             group = filter_group_by_quantities(minp, maxp, group)
             if len(group) != 0:
