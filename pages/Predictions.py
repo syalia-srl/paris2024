@@ -85,6 +85,9 @@ if sport_name:
             sport_event_id = sport_events_ids[
                 sport_events_names.index(sport_event_name)
             ]
+            others = False
+            if "others" in events[sport_event_id]["sex"][sport_sex]:
+                others = True
             finished = events[sport_event_id]["sex"][sport_sex]["finished"]
             prediction = events[sport_event_id]["sex"][sport_sex]["prediction"]
             result = events[sport_event_id]["sex"][sport_sex]["result"]
@@ -96,7 +99,7 @@ if sport_name:
             mr_names = []
             mr_countries = []
             for i in range(1, 4):
-                m_places.append(i)                
+                m_places.append(i)
                 m_status.append(prediction[str(i)]["status"])
                 m_names.append(prediction[str(i)]["name"])
                 m_countries.append(prediction[str(i)]["country_domain"])
@@ -106,7 +109,7 @@ if sport_name:
                     mr_countries.append(item["country_domain"])
             start_finalists = 4
             if sports[sport_id]["multiple_bronce"]:
-                m_places.append(3)                
+                m_places.append(3)
                 m_names.append(prediction["4"]["name"])
                 m_countries.append(prediction["4"]["country_domain"])
                 m_status.append(prediction["4"]["status"])
@@ -203,7 +206,7 @@ if sport_name:
                 fcol1, fcol2 = st.columns(2)
                 with fcol1:
                     with st.container(border=True):
-                        st.write("Prediccióon:")
+                        st.write("Predicción:")
                         st.dataframe(
                             data=df_f.style.apply(color_coding, axis=1),
                             hide_index=True,
@@ -214,6 +217,68 @@ if sport_name:
                         with st.container(border=True):
                             st.write("Resultados:")
                             st.dataframe(data=df_fr, hide_index=True)
+
+            if others:
+
+                cothers_1 = events[sport_event_id]["sex"][sport_sex]["others"][0]
+                cothers_2 = None
+                if len(events[sport_event_id]["sex"][sport_sex]["others"]) == 2:
+                    cothers_2 = events[sport_event_id]["sex"][sport_sex]["others"][1]
+                with st.expander("Otros pronósticos", True):
+                    ocol1, ocol2 = st.columns(2)
+                    with ocol1:
+                        co1p = cothers_1["prediction"]
+                        co1_places = [1,2,3]
+                        co1_names = [co1p["1"]["name"],co1p["2"]["name"],co1p["3"]["name"]]
+                        co1_countries = [co1p["1"]["country_domain"],co1p["2"]["country_domain"],co1p["3"]["country_domain"]]
+                        co1_status = [co1p["1"]["status"],co1p["2"]["status"],co1p["3"]["status"]]
+                        if sports[sport_id]["multiple_bronce"]:
+                            co1_places.append(3)
+                            co1_names.append(co1p["4"]["name"])
+                            co1_countries.append(co1p["4"]["country_domain"])
+                            co1_status.append(co1p["4"]["status"])
+                        df_co1 = pd.DataFrame(
+                            {
+                                "Lugar": co1_places,
+                                "Nombre": co1_names,
+                                "Pais": co1_countries,
+                                "status": co1_status,
+                            }
+                        )
+                        with st.container(border=True):
+                            st.write(cothers_1["name"])
+                            st.dataframe(
+                                data=df_co1.style.apply(color_coding, axis=1),
+                                hide_index=True,
+                                column_config={"status": None},
+                            )
+                    if cothers_2 != None:
+                        with ocol2:
+                            co2p = cothers_2["prediction"]
+                            co2_places = [1,2,3]
+                            co2_names = [co2p["1"]["name"],co2p["2"]["name"],co2p["3"]["name"]]
+                            co2_countries = [co2p["1"]["country_domain"],co2p["2"]["country_domain"],co2p["3"]["country_domain"]]
+                            co2_status = [co2p["1"]["status"],co2p["2"]["status"],co2p["3"]["status"]]
+                            if sports[sport_id]["multiple_bronce"]:
+                                co2_places.append(3)
+                                co2_names.append(co2p["4"]["name"])
+                                co2_countries.append(co2p["4"]["country_domain"])
+                                co2_status.append(co2p["4"]["status"])
+                            df_co2 = pd.DataFrame(
+                                {
+                                    "Lugar": co2_places,
+                                    "Nombre": co2_names,
+                                    "Pais": co2_countries,
+                                    "status": co2_status,
+                                }
+                            )
+                            with st.container(border=True):
+                                st.write(cothers_2["name"])
+                                st.dataframe(
+                                    data=df_co2.style.apply(color_coding, axis=1),
+                                    hide_index=True,
+                                    column_config={"status": None},
+                                )
 
 
 menu()
