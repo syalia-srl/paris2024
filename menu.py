@@ -8,3 +8,4 @@ def menu():
     st.sidebar.page_link("pages/Countries.py", label="Países")
     st.sidebar.page_link("pages/Team.py", label="Equipo")
     st.sidebar.page_link("pages/Ranking.py", label="Ranking de Modelos")
+    st.sidebar.page_link("pages/Others.py", label="Ranking de Pronósticos")
