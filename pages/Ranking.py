@@ -419,7 +419,7 @@ if len(ended) != 0:
                 rk = rk.sort_values(by=["G", "C1", "M1","F1","C2","M2","C3","M3","C4","M4","F2","Eventos"], ascending=False)
 
                 with st.expander("Ranking",expanded=True):
-                    st.dataframe(data=rk,hide_index=True,column_order=[name,"Eventos","C1","C2","C3","C4","M1","M2","M3","M4","F1","F2","G"],height=round((len(rk) + 1) * 35.3))
+                    st.dataframe(data=rk,hide_index=True,column_order=[name,"Eventos","G","C1","C2","C3","C4","M1","M2","M3","M4","F1","F2"],height=round((len(rk) + 1) * 35.3))
 
             else:
                 st.write("No hay eventos concluidos para esos criterios")

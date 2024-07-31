@@ -281,15 +281,21 @@ if len(ended) != 0:
         )
 
         rk_p = rk_p.sort_values(
-            by=["G", "C1", "M1", "C2", "M2","C4","M4", "Eventos"], ascending=False
+            by=["G", "C1", "M1", "C2", "M2", "C4", "M4", "Eventos"], ascending=False
         )
         with st.expander("Métricas de evaluación", expanded=False):
             st.write("**C1**: porciento de campeones en su posición exacta")
             st.write("**C2**: porciento de campeones entre los medallistas")
-            st.write("**C4**: porciento de campeones pronosticados entre los finalistas")
+            st.write(
+                "**C4**: porciento de campeones pronosticados entre los finalistas"
+            )
             st.write("**M1**: porciento de medallistas en su posición exacta")
-            st.write("**M2**: porciento de medallistas entre los medallistas pronosticados")
-            st.write("**M4**: porciento de medallistas pronosticados entre los finalistas")
+            st.write(
+                "**M2**: porciento de medallistas entre los medallistas pronosticados"
+            )
+            st.write(
+                "**M4**: porciento de medallistas pronosticados entre los finalistas"
+            )
             st.write("**G**: C1+C2+C4+M1+M2+M4")
 
         with st.expander("Ranking", expanded=True):
@@ -299,13 +305,13 @@ if len(ended) != 0:
                 column_order=[
                     "Pronósticos",
                     "Eventos",
+                    "G",
                     "C1",
                     "C2",
                     "C4",
                     "M1",
                     "M2",
-                    "M4",
-                    "G",
+                    "M4"
                 ],
                 height=round((len(rk_p) + 1) * 35.3),
             )
