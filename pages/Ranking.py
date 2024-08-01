@@ -222,7 +222,7 @@ def count_stats(predictions):
         "medalists": medalists,
         "medalists_in": medalists_in,
         "medalists_out": medalists_out,
-        "medalists_fin": medalists_out,
+        "medalists_fin": medalists_fin,
         "inc": inc,
         "exact": exact,
         "finalists": finalists,
