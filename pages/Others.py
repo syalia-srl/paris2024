@@ -49,11 +49,11 @@ def get_all_predictions():
             if "others" in e["sex"][s]:
                 if e["sex"][s]["others"][0]["name"] == "Sports Illustrated":
                     temp["si"] = e["sex"][s]["others"][0]["prediction"]
-                    if len(e["sex"][s]) > 1:
+                    if len(e["sex"][s]["others"]) > 1:
                         temp["lequipe"] = e["sex"][s]["others"][1]["prediction"]
                 else:
                     temp["lequipe"] = e["sex"][s]["others"][0]["prediction"]
-                    if len(e["sex"][s]) > 1:
+                    if len(e["sex"][s]["others"]) > 1:
                         temp["si"] = e["sex"][s]["others"][1]["prediction"]
             predictions.append(temp)
     return predictions
