@@ -89,77 +89,81 @@ def count_stats(predictions, keyword):
     inc = 0
     exact = 0
     finalists = 0
+    discount = 0
     for item in predictions:
         p = item[keyword]
-        if sports[item["sport"]]["multiple_bronce"]:
-            inc += 1
-        if p["1"]["status"] != 0:
-            finalists += 1
-            champs_fin += 1
-            medalists_fin += 1
-            if p["1"]["status"] == 2:
-                champs += 1
-                champs_in += 1
-                champs_out += 1
-                medalists += 1
-                exact += 1
-                medalists_out += 1
-                medalists_in += 1
-            elif p["1"]["status"] == 3:
-                medalists_out += 1
-                medalists_in += 1
-        if p["2"]["status"] != 0:
-            finalists += 1
-            medalists_fin += 1
-            if p["2"]["status"] == 2:
-                medalists += 1
-                exact += 1
-                medalists_out += 1
-                medalists_in += 1
-            elif p["2"]["status"] == 3:
-                medalists_out += 1
-                medalists_in += 1
-            elif p["2"]["status"] == 4:
-                champs_in += 1
-                champs_out += 1
-                medalists_out += 1
-                medalists_in += 1
-        if p["3"]["status"] != 0:
-            finalists += 1
-            medalists_fin += 1
-            if p["3"]["status"] == 2:
-                medalists += 1
-                exact += 1
-                medalists_out += 1
-                medalists_in += 1
-            elif p["3"]["status"] == 3:
-                medalists_out += 1
-                medalists_in += 1
-            elif p["3"]["status"] == 4:
-                champs_in += 1
-                champs_out += 1
-                medalists_out += 1
-                medalists_in += 1
-        if "4" in p and p["4"]["status"] != 0:
-            finalists += 1
+        if p!=None:
             if sports[item["sport"]]["multiple_bronce"]:
+                inc += 1
+            if p["1"]["status"] != 0:
+                finalists += 1
+                champs_fin += 1
                 medalists_fin += 1
-            if p["4"]["status"] == 2:
-                if sports[item["sport"]]["multiple_bronce"]:
+                if p["1"]["status"] == 2:
+                    champs += 1
+                    champs_in += 1
+                    champs_out += 1
                     medalists += 1
+                    exact += 1
                     medalists_out += 1
                     medalists_in += 1
-                exact += 1
-            elif p["4"]["status"] == 3:
-                medalists_out += 1
-                if sports[item["sport"]]["multiple_bronce"]:
+                elif p["1"]["status"] == 3:
+                    medalists_out += 1
                     medalists_in += 1
-            elif p["4"]["status"] == 4:
-                champs_out += 1
-                medalists_out += 1
-                if sports[item["sport"]]["multiple_bronce"]:
+            if p["2"]["status"] != 0:
+                finalists += 1
+                medalists_fin += 1
+                if p["2"]["status"] == 2:
+                    medalists += 1
+                    exact += 1
+                    medalists_out += 1
+                    medalists_in += 1
+                elif p["2"]["status"] == 3:
+                    medalists_out += 1
+                    medalists_in += 1
+                elif p["2"]["status"] == 4:
                     champs_in += 1
+                    champs_out += 1
+                    medalists_out += 1
                     medalists_in += 1
+            if p["3"]["status"] != 0:
+                finalists += 1
+                medalists_fin += 1
+                if p["3"]["status"] == 2:
+                    medalists += 1
+                    exact += 1
+                    medalists_out += 1
+                    medalists_in += 1
+                elif p["3"]["status"] == 3:
+                    medalists_out += 1
+                    medalists_in += 1
+                elif p["3"]["status"] == 4:
+                    champs_in += 1
+                    champs_out += 1
+                    medalists_out += 1
+                    medalists_in += 1
+            if "4" in p and p["4"]["status"] != 0:
+                finalists += 1
+                if sports[item["sport"]]["multiple_bronce"]:
+                    medalists_fin += 1
+                if p["4"]["status"] == 2:
+                    if sports[item["sport"]]["multiple_bronce"]:
+                        medalists += 1
+                        medalists_out += 1
+                        medalists_in += 1
+                    exact += 1
+                elif p["4"]["status"] == 3:
+                    medalists_out += 1
+                    if sports[item["sport"]]["multiple_bronce"]:
+                        medalists_in += 1
+                elif p["4"]["status"] == 4:
+                    champs_out += 1
+                    medalists_out += 1
+                    if sports[item["sport"]]["multiple_bronce"]:
+                        champs_in += 1
+                        medalists_in += 1
+        else:
+            discount +=1
     return {
         "champs": champs,
         "champs_in": champs_in,
@@ -172,12 +176,13 @@ def count_stats(predictions, keyword):
         "inc": inc,
         "exact": exact,
         "finalists": finalists,
+        "discount": discount
     }
 
 
 def percents_info(predictions, keyword):
     stats = count_stats(predictions, keyword)
-    total = len(predictions)
+    total = len(predictions) - stats["discount"]
     champs = round(stats["champs"] * 100 / total, 2)
     champs_in = round(stats["champs_in"] * 100 / total, 2)
     champs_out = round(stats["champs_out"] * 100 / total, 2)
