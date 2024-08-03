@@ -140,7 +140,7 @@ if len(predictions) > 0:
             }
         )
 
-        df_p = df_p.sort_values(by=["Oro", "Plata", "Bronce"], ascending=False)
+        df_p = df_p.sort_values(by=["Oro", "Plata", "Bronce","País"], ascending=False)
 
         df_p.insert(0, "Po.", [i for i in range(1, len(df_p) + 1)], True)
         
@@ -179,7 +179,7 @@ if len(predictions) > 0:
                 }
             )
 
-            df_r = df_r.sort_values(by=["Oro", "Plata", "Bronce"], ascending=False)
+            df_r = df_r.sort_values(by=["Oro", "Plata", "Bronce","País"], ascending=False)
 
             df_r.insert(0, "Po.", [i for i in range(1, len(df_r) + 1)], True)
 
