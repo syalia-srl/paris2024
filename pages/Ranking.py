@@ -5,16 +5,18 @@ from app import download_data
 from datetime import date, timedelta
 
 W = {
-    "c1":1,
-    "c2":1,
-    "c3":1,
-    "c4":1,
-    "m1":1,
-    "m2":1,
-    "m3":1,
-    "m4":1,
-    "f1":1,
-    "f2":1
+    "c1": 1,
+    "c2": 1,
+    "c3": 1,
+    "c4": 1,
+    "m1": 1,
+    "m2": 1,
+    "m3": 1,
+    "m4": 1,
+    "f1": 1,
+    "f2": 1,
+    "p1": 1,
+    "p2": 1
 }
 
 if not "data" in st.session_state:
@@ -107,14 +109,16 @@ def count_stats(predictions):
     inc = 0
     exact = 0
     finalists = 0
+    podium = 0
+    podium_ex = 0
     for item in predictions:
         p = item["prediction"]
         if sports[item["sport"]]["multiple_bronce"]:
-                inc += 1
+            inc += 1
         if p["1"]["status"] != 0:
             finalists += 1
-            champs_fin+=1
-            medalists_fin+=1
+            champs_fin += 1
+            medalists_fin += 1
             if p["1"]["status"] == 2:
                 champs += 1
                 champs_in += 1
@@ -122,62 +126,62 @@ def count_stats(predictions):
                 medalists += 1
                 exact += 1
                 medalists_out += 1
-                medalists_in +=1
+                medalists_in += 1
             elif p["1"]["status"] == 3:
                 medalists_out += 1
-                medalists_in +=1
+                medalists_in += 1
         if p["2"]["status"] != 0:
             finalists += 1
-            medalists_fin+=1
+            medalists_fin += 1
             if p["2"]["status"] == 2:
                 medalists += 1
                 exact += 1
                 medalists_out += 1
-                medalists_in +=1
+                medalists_in += 1
             elif p["2"]["status"] == 3:
                 medalists_out += 1
-                medalists_in +=1
+                medalists_in += 1
             elif p["2"]["status"] == 4:
                 champs_in += 1
                 champs_out += 1
                 medalists_out += 1
-                medalists_in +=1
+                medalists_in += 1
         if p["3"]["status"] != 0:
             finalists += 1
-            medalists_fin+=1
+            medalists_fin += 1
             if p["3"]["status"] == 2:
                 medalists += 1
                 exact += 1
                 medalists_out += 1
-                medalists_in +=1
+                medalists_in += 1
             elif p["3"]["status"] == 3:
                 medalists_out += 1
-                medalists_in +=1
+                medalists_in += 1
             elif p["3"]["status"] == 4:
                 champs_in += 1
                 champs_out += 1
                 medalists_out += 1
-                medalists_in +=1
+                medalists_in += 1
         if p["4"]["status"] != 0:
             finalists += 1
             if sports[item["sport"]]["multiple_bronce"]:
-                medalists_fin+=1
+                medalists_fin += 1
             if p["4"]["status"] == 2:
                 if sports[item["sport"]]["multiple_bronce"]:
                     medalists += 1
                     medalists_out += 1
-                    medalists_in +=1
+                    medalists_in += 1
                 exact += 1
             elif p["4"]["status"] == 3:
                 medalists_out += 1
                 if sports[item["sport"]]["multiple_bronce"]:
-                    medalists_in +=1
+                    medalists_in += 1
             elif p["4"]["status"] == 4:
                 champs_out += 1
                 medalists_out += 1
                 if sports[item["sport"]]["multiple_bronce"]:
                     champs_in += 1
-                    medalists_in +=1
+                    medalists_in += 1
         if p["5"]["status"] != 0:
             finalists += 1
             if p["5"]["status"] == 2:
@@ -214,6 +218,18 @@ def count_stats(predictions):
             elif p["8"]["status"] == 4:
                 champs_out += 1
                 medalists_out += 1
+        if p["1"]["status"] == 2 and p["2"]["status"] == 2 and p["3"]["status"] == 2:
+            if sports[item["sport"]]["multiple_bronce"]:
+                if p["4"]["status"] == 2:
+                    podium_ex += 1
+            else:
+                podium_ex += 1
+        if p["1"]["status"] > 1 and p["2"]["status"] > 1 and p["3"]["status"] > 1:
+            if sports[item["sport"]]["multiple_bronce"]:
+                if p["4"]["status"] >1:
+                    podium += 1
+            else:
+                podium += 1
     return {
         "champs": champs,
         "champs_in": champs_in,
@@ -226,6 +242,8 @@ def count_stats(predictions):
         "inc": inc,
         "exact": exact,
         "finalists": finalists,
+        "podium": podium,
+        "podium_ex": podium_ex
     }
 
 
@@ -242,6 +260,8 @@ def percents_info(predictions):
     medalists_fin = round(stats["medalists_fin"] * 100 / (total * 3 + stats["inc"]), 2)
     exact = round(stats["exact"] * 100 / (total * 8), 2)
     finalists = round(stats["finalists"] * 100 / (total * 8), 2)
+    podium = round(stats["podium"] * 100 / total, 2)
+    podium_ex = round(stats["podium_ex"] * 100 / total, 2)
     return {
         "total": total,
         "champs": champs,
@@ -254,6 +274,8 @@ def percents_info(predictions):
         "medalists_fin": medalists_fin,
         "exact": exact,
         "finalists": finalists,
+        "podium": podium,
+        "podium_ex": podium_ex,
     }
 
 
@@ -296,7 +318,7 @@ maxp = quantities[1]
 
 all = get_all_predictions()
 ended = filter_by_ended(all)
-#all_info = percents_info(ended)
+# all_info = percents_info(ended)
 
 if len(ended) != 0:
     preds = filter_by_dates(start, end, ended)
@@ -313,15 +335,25 @@ if len(ended) != 0:
             group = filter_group_by_quantities(minp, maxp, group)
             if len(group) != 0:
 
-                with st.expander("Métricas de evaluación",expanded=False):
+                with st.expander("Métricas de evaluación", expanded=False):
                     st.write("**C1**: porciento de campeones en su posición exacta")
                     st.write("**C2**: porciento de campeones entre los medallistas")
-                    st.write("**C3**: porciento de campeones entre los finalistas pronosticados")
-                    st.write("**C4**: porciento de campeones pronosticados entre los finalistas")
+                    st.write(
+                        "**C3**: porciento de campeones entre los finalistas pronosticados"
+                    )
+                    st.write(
+                        "**C4**: porciento de campeones pronosticados entre los finalistas"
+                    )
                     st.write("**M1**: porciento de medallistas en su posición exacta")
-                    st.write("**M2**: porciento de medallistas entre los medallistas pronosticados")
-                    st.write("**M3**: porciento de medallistas pronosticados entre los finalistas")
-                    st.write("**M4**: porciento de medallistas pronosticados entre los finalistas")
+                    st.write(
+                        "**M2**: porciento de medallistas entre los medallistas pronosticados"
+                    )
+                    st.write(
+                        "**M3**: porciento de medallistas pronosticados entre los finalistas"
+                    )
+                    st.write(
+                        "**M4**: porciento de medallistas pronosticados entre los finalistas"
+                    )
                     st.write("**F1**: porciento de finalistas en su posición exacta")
                     st.write("**F2**: porciento de finalistas")
                     st.write("**G**: C1+C2+C3+C4+M1+M2+M3+M4+F1+F2")
@@ -339,12 +371,13 @@ if len(ended) != 0:
                 f1 = []
                 f2 = []
                 g = []
+                p1 = []
+                p2 = []
 
-                
                 all_group = []
 
                 for k, v in group.items():
-                    all_group+=v
+                    all_group += v
                     labels.append(k)
                     info = percents_info(v)
                     total.append(info["total"])
@@ -358,19 +391,23 @@ if len(ended) != 0:
                     m4.append(info["medalists_fin"])
                     f1.append(info["exact"])
                     f2.append(info["finalists"])
+                    p1.append(info["podium_ex"])
+                    p2.append(info["podium"])
                     g.append(
-                        info["champs"]*W["c1"]
-                        + info["champs_in"]*W["c2"]
-                        + info["champs_out"]*W["c3"]
-                        + info["champs_fin"]*W["c4"]
-                        + info["medalists"]*W["m1"]
-                        + info["medalists_in"]*W["m2"]
-                        + info["medalists_out"]*W["m3"]
-                        + info["medalists_fin"]*W["m4"]
-                        + info["exact"]*W["f1"]
-                        + info["finalists"]*W["f2"]
+                        info["champs"] * W["c1"]
+                        + info["champs_in"] * W["c2"]
+                        + info["champs_out"] * W["c3"]
+                        + info["champs_fin"] * W["c4"]
+                        + info["medalists"] * W["m1"]
+                        + info["medalists_in"] * W["m2"]
+                        + info["medalists_out"] * W["m3"]
+                        + info["medalists_fin"] * W["m4"]
+                        + info["exact"] * W["f1"]
+                        + info["finalists"] * W["f2"]
+                        # + info["podium_ex"] * W["p1"]
+                        # + info["podium"] * W["p2"]
                     )
-                
+
                 all_info = percents_info(all_group)
 
                 labels.append("Todos")
@@ -385,17 +422,22 @@ if len(ended) != 0:
                 m4.append(all_info["medalists_fin"])
                 f1.append(all_info["exact"])
                 f2.append(all_info["finalists"])
+                p1.append(all_info["podium_ex"])
+                p2.append(all_info["podium"])
                 g.append(
-                    all_info["champs"]*W["c1"]
-                    + all_info["champs_in"]*W["c2"]
-                    + all_info["champs_out"]*W["c3"]
-                    + all_info["champs_fin"]*W["c4"]
-                    + all_info["medalists"]*W["m1"]
-                    + all_info["medalists_in"]*W["m2"]
-                    + all_info["medalists_out"]*W["m3"]
-                    + all_info["medalists_fin"]*W["m4"]
-                    + all_info["exact"]*W["f1"]
-                    + all_info["finalists"]*W["f2"]
+                    all_info["champs"] * W["c1"]
+                    + all_info["champs_in"] * W["c2"]
+                    + all_info["champs_out"] * W["c3"]
+                    + all_info["champs_fin"] * W["c4"]
+                    + all_info["medalists"] * W["m1"]
+                    + all_info["medalists_in"] * W["m2"]
+                    + all_info["medalists_out"] * W["m3"]
+                    + all_info["medalists_fin"] * W["m4"]
+                    + all_info["exact"] * W["f1"]
+                    + all_info["finalists"] * W["f2"]
+                    # + all_info["podium_ex"] * W["p1"]
+                    # + all_info["podium"] * W["p2"]
+
                 )
 
                 rk = pd.DataFrame(
@@ -412,14 +454,55 @@ if len(ended) != 0:
                         "M2": m2,
                         "M3": m3,
                         "M4": m4,
-                        "G": g
+                        "P1": p1,
+                        "P2": p2,
+                        "G": g,
                     }
                 )
 
-                rk = rk.sort_values(by=["G", "C1", "M1","F1","C2","M2","C3","M3","C4","M4","F2","Eventos"], ascending=False)
+                rk = rk.sort_values(
+                    by=[
+                        "G",
+                        "C1",
+                        "M1",
+                        "F1",
+                        "C2",
+                        "M2",
+                        "C3",
+                        "M3",
+                        "C4",
+                        "M4",
+                        "F2",
+                        "P1",
+                        "P2",
+                        "Eventos",
+                    ],
+                    ascending=False,
+                )
 
-                with st.expander("Ranking",expanded=True):
-                    st.dataframe(data=rk,hide_index=True,column_order=[name,"Eventos","G","C1","C2","C3","C4","M1","M2","M3","M4","F1","F2"],height=round((len(rk) + 1) * 35.3))
+                with st.expander("Ranking", expanded=True):
+                    st.dataframe(
+                        data=rk,
+                        hide_index=True,
+                        column_order=[
+                            name,
+                            "Eventos",
+                            "G",
+                            "C1",
+                            "C2",
+                            "C3",
+                            "C4",
+                            "M1",
+                            "M2",
+                            "M3",
+                            "M4",
+                            "F1",
+                            "F2",
+                            "P1",
+                            "P2"
+                        ],
+                        height=round((len(rk) + 1) * 35.3),
+                    )
 
             else:
                 st.write("No hay eventos concluidos para esos criterios")
