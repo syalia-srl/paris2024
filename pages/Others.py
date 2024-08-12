@@ -250,20 +250,21 @@ if len(ended) != 0:
     sports_names = ["Todos"]
     for s in sports_group:
         sports_names.append(s)
-    sport_name = st.selectbox(
+    sport_name = st.multiselect(
         "Seleccione el deporte:",
         sports_names,
-        index=0,
+        ["Todos"],
         key="select_sport_table",
         help="Seleccione el deporte",
         label_visibility="visible",
     )
 
     if sport_name:
-        st.write(sport_name)
         preds = ended
-        if sport_name != "Todos":
-            preds = sports_group[sport_name]
+        if "Todos" not in sport_name :
+            preds = []
+            for s in sport_name:
+                preds += sports_group[s]
         pmatcom = percents_info(preds, "prediction")
         psi = percents_info(preds, "si")
         plequipe = percents_info(preds, "lequipe")
